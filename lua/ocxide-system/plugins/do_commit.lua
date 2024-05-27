@@ -70,7 +70,7 @@ function M.do_commit()
 
 		vim.api.nvim_win_set_option(message_win, "winhl", "Normal:TelescopePromptTitle")
 
-		vim.api.nvim_feedkeys("i", "n", false)
+		vim.api.nvim_feedkeys("i", "t", false)
 
 		local function close_all()
 				vim.api.nvim_win_close(message_win, true)
@@ -78,6 +78,9 @@ function M.do_commit()
 
 				vim.api.nvim_win_close(info.win, true)
 				vim.api.nvim_buf_delete(info.buf, { force = true })
+
+				local keycommand = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+				vim.api.nvim_feedkeys(keycommand, "n", false)
 		end
 
 		vim.keymap.set('n', "<ESC>", close_all, { noremap = true, silent = true, buffer = message_buf })
