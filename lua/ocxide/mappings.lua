@@ -25,6 +25,11 @@ M.git = {
 	{ "n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" } },
 }
 
+M.git_fugitive = {
+	lazy = true,
+	{ "n", "<leader>gs", function() vim.cmd.Git() end, { desc = "Git status" } },
+}
+
 ---@format disable-next
 M.lsp = {
 	lazy = true,
