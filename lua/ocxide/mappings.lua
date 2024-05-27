@@ -31,8 +31,7 @@ M.git_fugitive = {
 	{
 		"n", "<leader>gco",
 		function ()
-			local status = vim.api.nvim_cmd({ cmd = "Git", args = { "status" } }, { output = true })
-			print(vim.inspect(status))
+			require("ocxide-system.plugins.do_commit").do_commit()
 		end
 	}
 }
