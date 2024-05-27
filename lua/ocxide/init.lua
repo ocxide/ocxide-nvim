@@ -16,4 +16,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("ocxide.plugins")
+require("lazy").setup({
+	spec = "ocxide.plugins",
+  change_detection = { notify = false }
+})
