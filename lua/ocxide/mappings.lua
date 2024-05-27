@@ -28,6 +28,13 @@ M.git = {
 M.git_fugitive = {
 	lazy = true,
 	{ "n", "<leader>gs", function() vim.cmd.Git() end, { desc = "Git status" } },
+	{
+		"n", "<leader>gco",
+		function ()
+			local status = vim.api.nvim_cmd({ cmd = "Git", args = { "status" } }, { output = true })
+			print(vim.inspect(status))
+		end
+	}
 }
 
 ---@format disable-next

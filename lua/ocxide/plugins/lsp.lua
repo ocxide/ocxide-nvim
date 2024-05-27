@@ -12,6 +12,8 @@ return {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
+		-- Source for nvim api
+		"hrsh7th/cmp-nvim-lua",
 		-- Completion engine
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
@@ -55,6 +57,7 @@ return {
 						library = {
 							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+							[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
 						},
 						maxPreload = 100000,
 						preloadFileSize = 10000,
@@ -201,6 +204,7 @@ return {
 			sources = cmp.config.sources({
 					{ name = 'nvim_lsp' },
 					{ name = 'luasnip' }, -- For luasnip users.
+					{ name = 'nvim_lua' },
 			}, {
 					{ name = 'buffer' },
 			})
