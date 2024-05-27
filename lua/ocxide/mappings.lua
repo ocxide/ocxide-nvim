@@ -25,4 +25,20 @@ M.git = {
 	{ "n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" } },
 }
 
+---@format disable-next
+M.lsp = {
+	lazy = true,
+	{ "n", "K", vim.lsp.buf.hover, { desc = "Hover" } },
+	{ "n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" } },
+	{ "n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" } },
+	{ "n", "gr", vim.lsp.buf.references, { desc = "References" } },
+	{ "n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" } },
+
+	{ "n", "<leader>vd", vim.diagnostic.open_float, { desc = "Show diagnostics" } },
+	{ "n", "<leader>sh", vim.lsp.buf.signature_help, { desc = "Show signature help" } },
+
+	{ "n", "<leader>ra", vim.lsp.buf.rename, { desc = "Rename" } },
+	{ "n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" } },
+}
+
 return M
