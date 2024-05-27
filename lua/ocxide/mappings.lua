@@ -12,6 +12,12 @@ M.find = {
 	{ "n", "<leader>fp", "<cmd>Telescope commands<cr>", { desc = "List commands" } },
 
 	{ "n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Find Help" } },
+
+	{
+		"n",
+		"<leader>fd",
+		":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+	},
 }
 
 M.git = {
