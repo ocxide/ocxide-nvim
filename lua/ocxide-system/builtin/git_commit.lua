@@ -57,9 +57,9 @@ local function do_commit()
 		local info_row = start_row - prompt_height
 
 		local info = open_info(gwidth, info_height, info_row)
-		local message_buf = vim.api.nvim_create_buf(false, true)
+		local prompt_buf = vim.api.nvim_create_buf(false, true)
 
-		local message_win = vim.api.nvim_open_win(message_buf, true, {
+		local prompt_window = vim.api.nvim_open_win(prompt_buf, true, {
 			title = " Commit message ",
 			relative = "editor",
 			style = "minimal",
@@ -72,51 +72,63 @@ local function do_commit()
 
 
 		vim.api.nvim_win_set_option(
-			message_win,
+			prompt_window,
 			"winhl",
 			"Normal:TelescopePromptNormal,FloatBorder:TelescopePromptBorder,FloatTitle:TelescopePromptTitle"
 		)
 
 		vim.api.nvim_feedkeys("i", "t", false)
 
-		listen_popup(message_buf)
+		listen_popup(prompt_buf)
 
-		local function close_all()
-			vim.api.nvim_win_close(message_win, true)
-			vim.api.nvim_buf_delete(message_buf, { force = true })
-
-			vim.api.nvim_win_close(info.win, true)
-			vim.api.nvim_buf_delete(info.buf, { force = true })
-
+		local function go_normal()
 			local keycommand = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
 			vim.api.nvim_feedkeys(keycommand, "n", false)
 		end
 
-		local function listen_close(group, buf)
-			vim.api.nvim_create_autocmd("WinClosed", {
-				group = group,
-				buffer = buf,
-				callback = close_all,
-			})
-		end
 
 		local ocxide_commit = vim.api.nvim_create_augroup("ocxide_commit", { clear = true })
 
-		listen_close(ocxide_commit, message_buf)
-		listen_close(ocxide_commit, info.buf)
+		local function close_info()
+				vim.api.nvim_win_close(info.win, true)
+				vim.api.nvim_buf_delete(info.buf, { force = true })
+		end
+
+		local function close_prompt()
+				vim.api.nvim_win_close(prompt_window, true)
+				vim.api.nvim_buf_delete(prompt_buf, { force = true })
+		end
+
+		vim.api.nvim_create_autocmd("WinClosed", {
+			group = ocxide_commit,
+			buffer = info.buf,
+			callback = function()
+				close_prompt()
+				go_normal()
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("WinClosed", {
+			group = ocxide_commit,
+			buffer = prompt_buf,
+			callback = function()
+				close_info()
+				go_normal()
+			end,
+		})
 
 		vim.keymap.set('i', "<CR>",
 			function()
-				local message = vim.api.nvim_buf_get_lines(message_buf, 0, -1, true)[1]
+				local message = vim.api.nvim_buf_get_lines(prompt_buf, 0, -1, true)[1]
 				local response = vim.api.nvim_cmd(
 					{ cmd = "Git", args = { "commit " .. "-m \"" .. message .. "\"" } },
 					{ output = true }
 				)
-				print(response)
+				print("Git response: "..response)
 
-				close_all()
+				close_prompt()
 			end,
-			{ noremap = true, silent = true, buffer = message_buf }
+			{ noremap = true, silent = true, buffer = prompt_buf }
 		)
 	end)
 end
