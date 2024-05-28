@@ -49,9 +49,9 @@ M.lsp = {
 
 M.rust = {
 	lazy = true,
-	{ "n", "<leader>ca", function() vim.cmd.RustLsp("codeAction") end, { desc = "Rust Code action" } },
-	{ "n", "<leader>vd", function () vim.cmd.RustLsp("renderDiagnostic") end, { desc = "Rust Show diagnostics" } },
-	{ "n", "<leader>ve", function () vim.cmd.RustLsp("explainError") end, { desc = "Rust Explain error" } },
+	{ "n", "<leader>ca", function() vim.cmd.RustLsp("codeAction") end,        { desc = "Rust Code action" } },
+	{ "n", "<leader>vd", function() vim.cmd.RustLsp("renderDiagnostic") end,  { desc = "Rust Show diagnostics" } },
+	{ "n", "<leader>ve", function() vim.cmd.RustLsp("explainError") end,      { desc = "Rust Explain error" } },
 }
 
 M.format = {
@@ -67,6 +67,11 @@ M.trouble = {
 	{ "n", "<leader>tt", "<cmd>TroubleToggle<cr>",                                                        { desc = "Toggle trouble" } },
 	{ "n", "[t",         function() require("trouble").next({ skip_groups = true, jump = true }) end,     { desc = "Go to definition" } },
 	{ "n", "]t",         function() require("trouble").previous({ skip_groups = true, jump = true }) end, { desc = "Go to definition" } },
+}
+
+M.dap = {
+	lazy = true,
+	{ "n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle breakpoint" } },
 }
 
 return M

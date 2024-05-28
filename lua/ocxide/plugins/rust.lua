@@ -1,11 +1,13 @@
 return {
 	"mrcjkb/rustaceanvim",
 	ft = "rust",
-	-- It does not really deppends on, but ensure to load it first (mappings overriding)
-	dependencies = { "neovim/nvim-lspconfig" },
+	dependencies = {
+		-- It does not really deppends on, but ensure to load it first (mappings overriding)
+		"neovim/nvim-lspconfig",
+		-- Await for debbuging config
+		"rcarriga/nvim-dap-ui"
+	},
 	config = function()
-		print("configuring rust")
-
 		local ocide_rust = vim.api.nvim_create_augroup("ocxide_rust", {})
 		vim.api.nvim_create_autocmd("LspAttach", {
 			pattern = "*.rs",
@@ -15,7 +17,11 @@ return {
 			end,
 		})
 
-		vim.g.rustaceanvim = {}
+		vim.g.rustaceanvim = {
+			dap = {
+				adapter = require("ocxide.settings.dap").adapter,
+			}
+		}
 		vim.g.rustaceanvim.server = {
 			default_settings = {
 				-- rust-analyzer language server configuration
