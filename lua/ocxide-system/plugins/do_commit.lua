@@ -40,9 +40,9 @@ local function open_info(gwidth, height, row)
 end
 
 function M.do_commit()
-	vim.ui.input({ prompt = "Files to commit: " }, function (files)
-		if files ~=nil and files ~= "" then
-			vim.api.nvim_cmd({ cmd = "Git", args = { "add "..files } }, {})
+	vim.ui.input({ prompt = "Files to commit: " }, function(files)
+		if files ~= nil and files ~= "" then
+			vim.api.nvim_cmd({ cmd = "Git", args = { "add " .. files } }, {})
 		end
 
 		local gheight = vim.api.nvim_list_uis()[1].height
@@ -52,7 +52,7 @@ function M.do_commit()
 		local prompt_height = 1
 
 		local start_row = (gheight - (info_height + prompt_height)) * 0.5
-		local info_row =  start_row - prompt_height
+		local info_row = start_row - prompt_height
 
 		local info = open_info(gwidth, info_height, info_row)
 		local message_buf = vim.api.nvim_create_buf(false, true)
@@ -68,29 +68,34 @@ function M.do_commit()
 			col = (gwidth - window_width) * 0.5,
 		})
 
-		vim.api.nvim_win_set_option(message_win, "winhl", "Normal:TelescopePromptTitle")
+
+		vim.api.nvim_win_set_option(
+			message_win,
+			"winhl",
+			"Normal:TelescopePromptNormal,FloatBorder:TelescopePromptBorder,FloatTitle:TelescopePromptTitle"
+		)
 
 		vim.api.nvim_feedkeys("i", "t", false)
 
 		local function close_all()
-				vim.api.nvim_win_close(message_win, true)
-				vim.api.nvim_buf_delete(message_buf, { force = true })
+			vim.api.nvim_win_close(message_win, true)
+			vim.api.nvim_buf_delete(message_buf, { force = true })
 
-				vim.api.nvim_win_close(info.win, true)
-				vim.api.nvim_buf_delete(info.buf, { force = true })
+			vim.api.nvim_win_close(info.win, true)
+			vim.api.nvim_buf_delete(info.buf, { force = true })
 
-				local keycommand = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
-				vim.api.nvim_feedkeys(keycommand, "n", false)
+			local keycommand = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+			vim.api.nvim_feedkeys(keycommand, "n", false)
 		end
 
 		vim.keymap.set('n', "<ESC>", close_all, { noremap = true, silent = true, buffer = message_buf })
 
 		vim.keymap.set('i', "<CR>",
-			function ()
+			function()
 				local message = vim.api.nvim_buf_get_lines(message_buf, 0, -1, true)[1]
 				local response = vim.api.nvim_cmd(
-						{ cmd = "Git", args = { "commit ".."-m \""..message.. "\"" } },
-						{ output = true }
+					{ cmd = "Git", args = { "commit " .. "-m \"" .. message .. "\"" } },
+					{ output = true }
 				)
 				print(response)
 
@@ -98,7 +103,7 @@ function M.do_commit()
 			end,
 			{ noremap = true, silent = true, buffer = message_buf }
 		)
-		end)
+	end)
 end
 
 return M
