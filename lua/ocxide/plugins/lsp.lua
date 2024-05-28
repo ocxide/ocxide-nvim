@@ -189,6 +189,19 @@ return {
 			capabilities = capabilities,
 		})
 
+		lspconfig.gopls.setup({
+			capabilities = capabilities,
+			settings = {
+				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					analyses = {
+						unusuedparams = true,
+					}
+				},
+			}
+		})
+
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 		cmp.setup {
