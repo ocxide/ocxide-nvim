@@ -5,13 +5,13 @@ local M = {}
 
 M.find = {
 	{ "n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" } },
-	{ "n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "Find Old files" } },
-	{ "n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" } },
+	{ "n", "<leader>fo", "<cmd>Telescope oldfiles<cr>",   { desc = "Find Old files" } },
+	{ "n", "<leader>fw", "<cmd>Telescope live_grep<cr>",  { desc = "Live grep" } },
 	-- Maybe replaceable
-	{ "n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "List buffers" } },
-	{ "n", "<leader>fp", "<cmd>Telescope commands<cr>", { desc = "List commands" } },
+	{ "n", "<leader>fb", "<cmd>Telescope buffers<cr>",    { desc = "List buffers" } },
+	{ "n", "<leader>fp", "<cmd>Telescope commands<cr>",   { desc = "List commands" } },
 
-	{ "n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Find Help" } },
+	{ "n", "<leader>fh", "<cmd>Telescope help_tags<cr>",  { desc = "Find Help" } },
 
 	{
 		"n",
@@ -21,13 +21,13 @@ M.find = {
 }
 
 M.git = {
-	{ "n", "<leader>gt", "<cmd>Telescope git_status<cr>", { desc = "Git status" } },
+	{ "n", "<leader>gt", "<cmd>Telescope git_status<cr>",  { desc = "Git status" } },
 	{ "n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" } },
 }
 
 M.git_fugitive = {
 	lazy = true,
-	{ "n", "<leader>gs", function() vim.cmd.Git() end, { desc = "Git status" } },
+	{ "n", "<leader>gs",  function() vim.cmd.Git() end,                { desc = "Git status" } },
 	{ "n", "<leader>gco", require("ocxide-system.builtin").git_commit, { desc = "Commits the current changes" } },
 }
 
@@ -53,6 +53,13 @@ M.format = {
 
 M.codeium = {
 	{ "i", "<C-g>", function() return vim.fn["codeium#Accept"]() end, { desc = "Accept the current completion", expr = true } },
+}
+
+M.trouble = {
+	lazy = true,
+	{ "n", "<leader>tt", "<cmd>TroubleToggle<cr>",                                                    { desc = "Toggle trouble" } },
+	{ "n", "[t", function() require("trouble").next({ skip_groups = true, jump = true }) end, { desc = "Go to definition" } },
+	{ "n", "]t", function() require("trouble").previous({ skip_groups = true, jump = true }) end, { desc = "Go to definition" } },
 }
 
 return M
