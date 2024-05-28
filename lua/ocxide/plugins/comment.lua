@@ -2,8 +2,6 @@ return {
 	"numToStr/Comment.nvim",
 	lazy = false,
 	config = function()
-		require("ocxide-system.keymaps").load("comment")
-
 		require("Comment").setup({
 			toggler = {
 				---Line-comment toggle keymap
