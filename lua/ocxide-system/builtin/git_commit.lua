@@ -1,12 +1,8 @@
-local M = {}
-
 local function listen_popup(buf)
 	vim.api.nvim_buf_set_keymap(buf, "n", "q", "<cmd>close<cr>", { noremap = true, silent = true })
 	vim.keymap.set('n', "<ESC>", "<cmd>close<cr>", { noremap = true, silent = true, buffer = buf })
 end
 
-
--- TODO: set a correct highlight, refactor to properly depend on the corresponding plugings
 
 local window_width = 100
 
@@ -45,7 +41,7 @@ local function open_info(gwidth, height, row)
 	return { buf = buf, win = win }
 end
 
-function M.do_commit()
+local function do_commit()
 	vim.ui.input({ prompt = "Files to commit: " }, function(files)
 		if files ~= nil and files ~= "" then
 			vim.api.nvim_cmd({ cmd = "Git", args = { "add " .. files } }, {})
@@ -125,4 +121,4 @@ function M.do_commit()
 	end)
 end
 
-return M
+return do_commit

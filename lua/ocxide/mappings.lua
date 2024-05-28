@@ -28,12 +28,7 @@ M.git = {
 M.git_fugitive = {
 	lazy = true,
 	{ "n", "<leader>gs", function() vim.cmd.Git() end, { desc = "Git status" } },
-	{
-		"n", "<leader>gco",
-		function ()
-			require("ocxide-system.plugins.do_commit").do_commit()
-		end
-	}
+	{ "n", "<leader>gco", require("ocxide-system.builtin").git_commit, { desc = "Commits the current changes" } },
 }
 
 ---@format disable-next
