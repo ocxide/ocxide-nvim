@@ -1,22 +1,38 @@
 local user_mappings = require("ocxide.mappings")
 
-function LoadMappigns(mappings)
+local function merge_opts(opts, user_opts)
+	opts = opts or {}
+
+	if user_opts == nil then
+		return opts
+	end
+
+	for k, v in pairs(user_opts) do
+		opts[k] = v
+	end
+
+	return opts
+end
+
+--- @param user_opts table | nil
+local function loadMappigns(mappings, user_opts)
 	for _, mapping in ipairs(mappings) do
 		local mode, lhs, rhs, opts = table.unpack(mapping)
+		opts = merge_opts(opts, user_opts)
 		vim.keymap.set(mode, lhs, rhs, opts)
 	end
 end
 
-function CreateMappings(mappings)
+local function createMappings(mappings)
 	if mappings.lazy then
 		return
 	end
 
-	LoadMappigns(mappings)
+	loadMappigns(mappings)
 end
 
 for _mgroup, mappings in pairs(user_mappings) do
-	CreateMappings(mappings)
+	createMappings(mappings)
 end
 
 local M = {}
@@ -24,11 +40,7 @@ local M = {}
 --- @param mappingsName string keyname of the mapping
 --- @param opts table | nil overrides the default opts of the mappings, does a table merge
 function M.load(mappingsName, opts)
-	--- @class Mappings
-	--- @field [1] string mode
-	--- @field [2] string lhs
-	--- @field [3] string rhs
-	--- @field [4] table|nil opts
+	--- @type number[] | nil
 	local mappings = user_mappings[mappingsName]
 
 	if mappings == nil then
@@ -36,16 +48,7 @@ function M.load(mappingsName, opts)
 		return
 	end
 
-	if opts ~= nil then
-		mappings[4] = mappings[4] or {}
-		local mappingsOpts = mappings[4]
-
-		for k, v in ipairs(opts) do
-			mappingsOpts[k] = v
-		end
-	end
-
-	LoadMappigns(mappings)
+	loadMappigns(mappings, opts)
 end
 
 return M
