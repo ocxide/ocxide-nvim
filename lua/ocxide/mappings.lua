@@ -72,6 +72,7 @@ M.trouble = {
 M.dap = {
 	lazy = true,
 	{ "n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle breakpoint" } },
+	{ "n", "<leader>dus", function() require("dapui").toggle() end, { desc = "Toggle DAP UI" } },
 }
 
 return M
