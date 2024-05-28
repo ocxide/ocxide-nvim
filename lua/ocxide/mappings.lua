@@ -52,6 +52,10 @@ M.lsp = {
 	{ "n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" } },
 }
 
+M.format = {
+	{ "n", "<leader>fm", vim.lsp.buf.format, { desc = "Format" } },
+}
+
 M.codeium = {
 	{ "i", "<C-g>", function() return vim.fn["codeium#Accept"]() end, { desc = "Accept the current completion", expr = true } },
 }
