@@ -1,5 +1,11 @@
 local M = {}
 
+local function listen_popup(buf)
+	vim.api.nvim_buf_set_keymap(buf, "n", "q", "<cmd>close<cr>", { noremap = true, silent = true })
+	vim.keymap.set('n', "<ESC>", "<cmd>close<cr>", { noremap = true, silent = true, buffer = buf })
+end
+
+
 -- TODO: set a correct highlight, refactor to properly depend on the corresponding plugings
 
 local window_width = 100
@@ -77,6 +83,8 @@ function M.do_commit()
 
 		vim.api.nvim_feedkeys("i", "t", false)
 
+		listen_popup(message_buf)
+
 		local function close_all()
 			vim.api.nvim_win_close(message_win, true)
 			vim.api.nvim_buf_delete(message_buf, { force = true })
@@ -88,7 +96,18 @@ function M.do_commit()
 			vim.api.nvim_feedkeys(keycommand, "n", false)
 		end
 
-		vim.keymap.set('n', "<ESC>", close_all, { noremap = true, silent = true, buffer = message_buf })
+		local function listen_close(group, buf)
+			vim.api.nvim_create_autocmd("WinClosed", {
+				group = group,
+				buffer = buf,
+				callback = close_all,
+			})
+		end
+
+		local ocxide_commit = vim.api.nvim_create_augroup("ocxide_commit", { clear = true })
+
+		listen_close(ocxide_commit, message_buf)
+		listen_close(ocxide_commit, info.buf)
 
 		vim.keymap.set('i', "<CR>",
 			function()
