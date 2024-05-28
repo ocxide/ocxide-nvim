@@ -21,14 +21,14 @@ M.find = {
 }
 
 M.git = {
-	{ "n", "<leader>gt", "<cmd>Telescope git_status<cr>",  { desc = "Git status" } },
-	{ "n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" } },
+	{ "n", "<leader>Gt", "<cmd>Telescope git_status<cr>",  { desc = "Git status" } },
+	{ "n", "<leader>Gc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" } },
 }
 
 M.git_fugitive = {
 	lazy = true,
-	{ "n", "<leader>gs",  function() vim.cmd.Git() end,                { desc = "Git status" } },
-	{ "n", "<leader>gco", require("ocxide-system.builtin").git_commit, { desc = "Commits the current changes" } },
+	{ "n", "<leader>Gs",  function() vim.cmd.Git() end,                { desc = "Git status" } },
+	{ "n", "<leader>Gco", require("ocxide-system.builtin").git_commit, { desc = "Commits the current changes" } },
 }
 
 ---@format disable-next
