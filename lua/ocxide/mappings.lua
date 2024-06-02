@@ -21,8 +21,7 @@ M.find = {
 }
 
 M.git = {
-	lazy = true,
-	{ "n", "<leader>gvs",  function() vim.cmd.Git() end,                { desc = "Git status" } },
+	{ "n", "<leader>gs",  function() vim.cmd.Git() end,                { desc = "Git status" } },
 	{ "n", "<leader>gvc", require("ocxide-system.builtin").git_commit, { desc = "Commits the current changes" } },
 }
 
