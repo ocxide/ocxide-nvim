@@ -5,7 +5,9 @@ return {
 		"nvim-neotest/nvim-nio",
 
 		-- For getting the debuggers
+		"neovim/nvim-lspconfig",
 		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
 	},
 	config = function()
 		require("dapui").setup()
