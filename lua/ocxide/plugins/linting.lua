@@ -18,6 +18,12 @@ return {
 		vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
 			group = ocxide_Lint,
 			callback = function()
+				local linters = require("lint").get_running()
+
+				if #linters == 0 then
+					return
+				end
+
 				lint.try_lint()
 			end,
 		})
