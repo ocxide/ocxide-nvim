@@ -5,7 +5,22 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
+		local find_files = {
+			hidden = true,
+			file_ignore_patterns = {
+				".git",
+				-- js
+				"node_modules",
+				"dist",
+				-- rust
+				"target",
+			}
+		}
+
 		require("telescope").setup({
+			pickers = {
+				find_files = find_files,
+			},
 			extensions = {
 				file_browser = {
 					hidden = true,
