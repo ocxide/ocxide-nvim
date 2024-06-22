@@ -69,16 +69,21 @@ M.dap = {
 	{ "n", "<leader>dus", function() require("dapui").toggle() end,          { desc = "Toggle DAP UI" } },
 }
 
-M.telescope = {
-	{ "n", "<leader>fh", "<cmd>HarpoonToggle<cr>", { desc = "Toggles harpoon list" } },
-	{ "n", "<leader>ha", function() require("harpoon"):list():add() end, { desc = "Add file to harpoon" } },
-	{ "n", "<leader>hn", function() require("harpoon"):list():next() end, desc = "Next harpoon file" },
+M.harpoon = {
+	{ "n", "<leader>hh", "<cmd>HarpoonToggle<cr>",                            { desc = "Toggles harpoon list" } },
+	{ "n", "<leader>ha", function() require("harpoon"):list():add() end,      { desc = "Add file to harpoon" } },
+	{ "n", "<leader>hn", function() require("harpoon"):list():next() end,     desc = "Next harpoon file" },
 	{ "n", "<leader>hp", function() require("harpoon"):list():previous() end, desc = "Previous harpoon file" },
 	-- It is not in order, but it is better for my fingers
-	{ "n", "<C-j>", function () require("harpoon"):list():select(1) end, desc = "Select harpoon file 2" },
-	{ "n", "<C-k>", function () require("harpoon"):list():select(2) end, desc = "Select harpoon file 3" },
-	{ "n", "<C-h>", function () require("harpoon"):list():select(3) end, desc = "Select harpoon file 1" },
-	{ "n", "<C-l>", function () require("harpoon"):list():select(4) end, desc = "Select harpoon file 4" },
+	{ "n", "<C-j>",      function() require("harpoon"):list():select(1) end,  desc = "Select harpoon file 2" },
+	{ "n", "<C-k>",      function() require("harpoon"):list():select(2) end,  desc = "Select harpoon file 3" },
+	{ "n", "<C-h>",      function() require("harpoon"):list():select(3) end,  desc = "Select harpoon file 1" },
+	{ "n", "<C-l>",      function() require("harpoon"):list():select(4) end,  desc = "Select harpoon file 4" },
+}
+
+M.harpoon_list = {
+	lazy = true,
+	{ "n", "dd", function(opts) require("ocxide.plugins.harpoon").actions.remove_entry(opts) end, desc = "Delete harpoon file" },
 }
 
 return M

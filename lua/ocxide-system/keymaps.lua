@@ -15,10 +15,19 @@ local function merge_opts(opts, user_opts)
 end
 
 --- @param user_opts table | nil
-local function loadMappigns(mappings, user_opts)
+--- @param args table | nil custom args that will be passed to the mappings
+local function loadMappigns(mappings, user_opts, args)
 	for _, mapping in ipairs(mappings) do
 		local mode, lhs, rhs, opts = table.unpack(mapping)
 		opts = merge_opts(opts, user_opts)
+
+		if type(rhs) == "function" then
+			local old_rhs = rhs
+			rhs = function()
+				old_rhs(args)
+			end
+		end
+
 		vim.keymap.set(mode, lhs, rhs, opts)
 	end
 end
@@ -39,7 +48,8 @@ local M = {}
 
 --- @param mappingsName string keyname of the mapping
 --- @param opts table | nil overrides the default opts of the mappings, does a table merge
-function M.load(mappingsName, opts)
+--- @param args table | nil custom args that will be passed to the mappings
+function M.load(mappingsName, opts, args)
 	--- @type number[] | nil
 	local mappings = user_mappings[mappingsName]
 
@@ -48,7 +58,7 @@ function M.load(mappingsName, opts)
 		return
 	end
 
-	loadMappigns(mappings, opts)
+	loadMappigns(mappings, opts, args)
 end
 
 return M
