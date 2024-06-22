@@ -10,3 +10,6 @@ vim.opt.wrap = false
 
 -- clipboard
 vim.opt.clipboard = ""
+
+-- Clear search highlight
+vim.keymap.set("n", "<ESC>", ":noh<CR>", { silent = true })
