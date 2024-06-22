@@ -43,9 +43,9 @@ M.lsp = {
 
 M.rust = {
 	lazy = true,
-	{ "n", "<leader>ca", function() vim.cmd.RustLsp("codeAction") end,        { desc = "Rust Code action" } },
-	{ "n", "<leader>vd", function() vim.cmd.RustLsp("renderDiagnostic") end,  { desc = "Rust Show diagnostics" } },
-	{ "n", "<leader>ve", function() vim.cmd.RustLsp("explainError") end,      { desc = "Rust Explain error" } },
+	{ "n", "<leader>ca", function() vim.cmd.RustLsp("codeAction") end,       { desc = "Rust Code action" } },
+	{ "n", "<leader>vd", function() vim.cmd.RustLsp("renderDiagnostic") end, { desc = "Rust Show diagnostics" } },
+	{ "n", "<leader>ve", function() vim.cmd.RustLsp("explainError") end,     { desc = "Rust Explain error" } },
 }
 
 M.format = {
@@ -65,8 +65,20 @@ M.trouble = {
 
 M.dap = {
 	lazy = true,
-	{ "n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle breakpoint" } },
-	{ "n", "<leader>dus", function() require("dapui").toggle() end, { desc = "Toggle DAP UI" } },
+	{ "n", "<leader>db",  function() require("dap").toggle_breakpoint() end, { desc = "Toggle breakpoint" } },
+	{ "n", "<leader>dus", function() require("dapui").toggle() end,          { desc = "Toggle DAP UI" } },
+}
+
+M.telescope = {
+	{ "n", "<leader>fh", "<cmd>HarpoonToggle<cr>", { desc = "Toggles harpoon list" } },
+	{ "n", "<leader>ha", function() require("harpoon"):list():add() end, { desc = "Add file to harpoon" } },
+	{ "n", "<leader>hn", function() require("harpoon"):list():next() end, desc = "Next harpoon file" },
+	{ "n", "<leader>hp", function() require("harpoon"):list():previous() end, desc = "Previous harpoon file" },
+	-- It is not in order, but it is better for my fingers
+	{ "n", "<C-j>", function () require("harpoon"):list():select(1) end, desc = "Select harpoon file 2" },
+	{ "n", "<C-k>", function () require("harpoon"):list():select(2) end, desc = "Select harpoon file 3" },
+	{ "n", "<C-h>", function () require("harpoon"):list():select(3) end, desc = "Select harpoon file 1" },
+	{ "n", "<C-l>", function () require("harpoon"):list():select(4) end, desc = "Select harpoon file 4" },
 }
 
 return M
