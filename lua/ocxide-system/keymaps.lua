@@ -21,10 +21,10 @@ local function loadMappigns(mappings, user_opts, args)
 		local mode, lhs, rhs, opts = table.unpack(mapping)
 		opts = merge_opts(opts, user_opts)
 
-		if type(rhs) == "function" then
+		if type(rhs) == "function" and args ~= nil then
 			local old_rhs = rhs
 			rhs = function()
-				old_rhs(args)
+				return old_rhs(args)
 			end
 		end
 
