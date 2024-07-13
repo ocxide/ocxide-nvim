@@ -49,7 +49,10 @@ M.rust = {
 }
 
 M.format = {
-	{ "n", "<leader>fm", vim.lsp.buf.format, { desc = "Format" } },
+	{ "n", "<leader>fm", function()
+		local conform = require("conform")
+		conform.format({ async = true, lsp_format = 'fallback' })
+	end, { desc = "Format" } },
 }
 
 M.codeium = {
@@ -83,9 +86,9 @@ M.harpoon = {
 
 M.harpoon_list = {
 	lazy = true,
-	{ "n", "dd", function(opts) require("ocxide.plugins.harpoon").actions.remove_entry(opts) end, desc = "Delete harpoon file" },
-	{ "n", "<S-D><S-D>", function(opts) require("ocxide.plugins.harpoon").actions.remove_all(opts) end,  desc = "Delete all harpoon files" },
-	{ "n", "p",  function(opts) require("ocxide.plugins.harpoon").actions.add_entry(opts) end,  desc = "Add harpoon file" },
+	{ "n", "dd",         function(opts) require("ocxide.plugins.harpoon").actions.remove_entry(opts) end, desc = "Delete harpoon file" },
+	{ "n", "<S-D><S-D>", function(opts) require("ocxide.plugins.harpoon").actions.remove_all(opts) end,   desc = "Delete all harpoon files" },
+	{ "n", "p",          function(opts) require("ocxide.plugins.harpoon").actions.add_entry(opts) end,    desc = "Add harpoon file" },
 }
 
 return M
