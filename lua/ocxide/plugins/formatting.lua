@@ -5,17 +5,21 @@ return {
 		require("conform").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { "prettier" },
-				typescript = { "prettier" },
+				javascript = { "prettier", "biome" },
+				typescript = { "prettier", "biome" },
 				typescriptreact = { "prettier" },
 				astro = { "prettier" },
 				svelte = { "prettier" },
 				css = { "prettier" },
+				sass = { "prettier", "biome" },
+				scss = { "prettier", "biome" },
 				html = { "prettier", "biome" },
 				json = { "prettier" },
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 				graphql = { "prettier" },
+				rust = { "rustfmt" },
+				cs = { "csharpier" },
 			},
 			-- Set the log level. Use `:ConformInfo` to see the location of the log file.
 			log_level = vim.log.levels.ERROR,
