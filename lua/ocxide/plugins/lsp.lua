@@ -39,7 +39,7 @@ return {
 				-- default handler
 				function(server_name)
 					require("lspconfig")[server_name].setup({ capabilities = capabilities })
-				end
+				end,
 			},
 		})
 
@@ -64,7 +64,7 @@ return {
 						library = {
 							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-							[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+							[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
 						},
 						maxPreload = 100000,
 						preloadFileSize = 10000,
@@ -82,8 +82,18 @@ return {
 				"javascript",
 				"javascriptreact",
 				"javascript.jsx",
+				"vue",
 			},
 			root_dir = lspconfig.util.root_pattern("tsconfig.json", "jsconfig.json", "tsconfig.json", "jsconfig.json"),
+			init_options = {
+				plugins = {
+					{
+						name = "@vue/typescript-plugin",
+						location = "./node_modules/@vue/language-server",
+						languages = { "vue" },
+					},
+				},
+			},
 		})
 
 		lspconfig.angularls.setup({
@@ -197,38 +207,49 @@ return {
 					usePlaceholders = true,
 					analyses = {
 						unusuedparams = true,
-					}
+					},
 				},
-			}
+			},
+		})
+
+		lspconfig.volar.setup({
+			capabilities = capabilities,
+			filetypes = {
+				"typescript",
+				"javascript",
+				"javascriptreact",
+				"typescriptreact",
+				"vue",
+			},
 		})
 
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
-		cmp.setup {
+		cmp.setup({
 			snippet = {
 				expand = function(args)
-					require('luasnip').lsp_expand(args.body)
+					require("luasnip").lsp_expand(args.body)
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-				['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-				['<C-e>'] = cmp.mapping.abort(),
+				["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+				["<C-e>"] = cmp.mapping.abort(),
 				-- I don't know what this does
 				["<C-Space>"] = cmp.mapping.complete(),
 				-- TODO: Keep only one
-				['<C-l>'] = cmp.mapping.confirm({ select = true }),
-				['<C-}>'] = cmp.mapping.confirm({ select = true }),
-				['<C-CR>'] = cmp.mapping.confirm({ select = true }),
+				["<C-l>"] = cmp.mapping.confirm({ select = true }),
+				["<C-}>"] = cmp.mapping.confirm({ select = true }),
+				["<C-CR>"] = cmp.mapping.confirm({ select = true }),
 			}),
 			sources = cmp.config.sources({
-				{ name = 'nvim_lsp' },
-				{ name = 'luasnip' }, -- For luasnip users.
-				{ name = 'nvim_lua' },
+				{ name = "nvim_lsp" },
+				{ name = "luasnip" }, -- For luasnip users.
+				{ name = "nvim_lua" },
 			}, {
-				{ name = 'buffer' },
-			})
-		}
+				{ name = "buffer" },
+			}),
+		})
 
 		vim.diagnostic.config({
 			-- update_in_insert = true,

@@ -20,6 +20,7 @@ return {
 				graphql = { "prettier" },
 				rust = { "rustfmt" },
 				cs = { "csharpier" },
+				vue = { "prettier", "biome" }
 			},
 			-- Set the log level. Use `:ConformInfo` to see the location of the log file.
 			log_level = vim.log.levels.ERROR,
