@@ -4,16 +4,6 @@ local function config()
 		ensure_installed = {
 			"vim",
 			"lua",
-
-			-- web dev
-			"html",
-			"css",
-			"scss",
-			"javascript",
-			"typescript",
-			"tsx",
-			"json",
-			"svelte",
 		},
 
 		-- Install parsers synchronously (only applied to `ensure_installed`)
